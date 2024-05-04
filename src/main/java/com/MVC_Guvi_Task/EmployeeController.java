@@ -69,9 +69,9 @@ public class EmployeeController {
 		 return mv;
 	}
 	
-	@PutMapping("/updateEmployee")
-	public Employee  updateEmployee(@RequestBody Employee employee)
-	{
-		return employeeService.updateEmployee(employee);
-	}
+	// @PutMapping("/updateEmployee")
+	// public Employee  updateEmployee(@RequestBody Employee employee)
+	// {
+	// 	return employeeService.updateEmployee(employee);
+	// }
 }
