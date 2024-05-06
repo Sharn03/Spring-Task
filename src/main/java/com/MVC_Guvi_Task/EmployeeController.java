@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-@Controller
+@RestController
 
 public class EmployeeController {
 	@Autowired
@@ -33,45 +33,30 @@ public class EmployeeController {
 	//create an end-point for adding the employee
 	@PostMapping("/createEmployee")
 	@ResponseStatus(HttpStatus.CREATED)
-	public String createEmployee( @ModelAttribute ("employee") Employee employee)
+	public Employee createEmployee(Employee employee)
 	{
-		
-		employeeService.addEmployee(employee);
+		return employeeService.addEmployee(employee);
 		 
-		 return "addedEmployee";
 	}
 	
 	
 	//create an end-point for displaying all the employee
 	@GetMapping("/displayAllEmployee")
-	public ModelAndView getAllEmployee()
+	public List<Employee>getAllEmployee()
 	{
-		 List<Employee> list = employeeService.findAllEmployee();
-		 ModelAndView mv = new ModelAndView();
-		 for(Employee e : list)
-		 {
-			 mv.addObject("displayAllEmployee", list);
-			 System.out.println();
-		 }
-		 
-		 mv.setViewName("employeeList");
-		 return mv;
+		return employeeService.findAllEmployee();
 	}
 	
 	//create an end-point for displaying the employee based on id
 	@GetMapping("displayEmployeeById/{id}")
-	public ModelAndView getEmployeeById(@PathVariable String id)
+	public Employee getEmployeeById(@PathVariable String id)
 	{
-		Employee employee = employeeService.findByEmployeeId(id);
-		 ModelAndView mv = new ModelAndView();
-		 mv.addObject("displayEmployeeById", employee);
-		 mv.setViewName("employeeDetailsById");
-		 return mv;
+		return employeeService.findByEmployeeId(id);
 	}
 	
-	// @PutMapping("/updateEmployee")
-	// public Employee  updateEmployee(@RequestBody Employee employee)
-	// {
-	// 	return employeeService.updateEmployee(employee);
-	// }
+	@PutMapping("/updateEmployee")
+	public Employee  updateEmployee(@RequestBody Employee employee)
+	{
+		return employeeService.updateEmployee(employee);
+	}
 }
